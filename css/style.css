@@ -1195,6 +1195,7 @@ input, textarea, select {
    Flex removes the inline-iframe baseline gap so only the margins count. */
 .cf-turnstile {
   display: flex;
+  width: 300px; /* Turnstile's fixed widget width; js/main.js zooms it down on narrow forms */
   margin-top: var(--space-4);
 }
 

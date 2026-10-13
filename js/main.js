@@ -162,6 +162,18 @@ document.querySelectorAll("form.web3form").forEach((form) => {
   });
 });
 
+// The Turnstile widget is a fixed 300px wide, wider than the form's content area on
+// phones. Shrink it to fit so it keeps the same side padding as the other inputs.
+function fitTurnstile() {
+  document.querySelectorAll(".cf-turnstile").forEach((el) => {
+    el.style.zoom = 1;
+    const available = el.parentElement.clientWidth;
+    el.style.zoom = available < el.offsetWidth ? available / el.offsetWidth : 1;
+  });
+}
+fitTurnstile();
+window.addEventListener("resize", fitTurnstile);
+
 // Open a <details> accordion when a same-page link jumps to it
 function openDetailsTarget(hash) {
   if (!hash || hash.length < 2) return;
