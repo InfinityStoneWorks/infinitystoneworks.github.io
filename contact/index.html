@@ -10,6 +10,8 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/css/style.css">
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+<script src="https://web3forms.com/client/script.js" async defer></script>
 </head>
 <body>
 <a class="skip-link" href="#main">Skip to main content</a>
@@ -113,9 +115,9 @@
 
             <div class="field">
               <label for="photos">Photos <span class="field-optional">(optional)</span></label>
-              <input id="photos" name="attachment" type="file" accept="image/jpeg,image/png,image/webp,image/heic" multiple aria-describedby="photos-hint photos-list">
-              <p class="field-hint" id="photos-hint">Up to 5 photos of your project area, 5 MB each. JPG, PNG, WebP or HEIC.</p>
-              <ul class="file-picks" id="photos-list" aria-live="polite"></ul>
+              <!-- Web3Forms Advanced File Uploader (Pro): the client script swaps this input for a drop zone -->
+              <input id="photos" name="attachment" type="file" style="display:none;" data-advanced="true" data-form-id="3703527b-4128-43ba-b43f-9c9d96c26cb2" data-max-files="5" data-max-file-size="10MB" accept="image/*" multiple aria-describedby="photos-hint">
+              <p class="field-hint" id="photos-hint">Up to 5 photos of your project area, 10 MB each.</p>
             </div>
 
             <div class="field">
@@ -135,16 +137,8 @@
             <!-- Honeypot: hidden from people, filled in by bots. Web3Forms rejects the submission if it's checked. -->
             <input type="checkbox" name="botcheck" class="honeypot" tabindex="-1" autocomplete="off" aria-hidden="true">
 
-            <!--
-              reCAPTCHA v2 (not active yet). Once the Web3Forms Pro plan and the reCAPTCHA
-              secret key are in place:
-                1. Add this script to the page <head>:
-                   <script src="https://www.google.com/recaptcha/api.js" async defer></script>
-                2. Uncomment the line below and replace the site key:
-                   <div class="g-recaptcha" data-sitekey="YOUR_RECAPTCHA_SITE_KEY"></div>
-                3. In js/main.js, send the g-recaptcha-response field (see RECAPTCHA note).
-            -->
-            <!-- <div class="g-recaptcha" data-sitekey="YOUR_RECAPTCHA_SITE_KEY"></div> -->
+            <!-- Cloudflare Turnstile (set the secret key + "turnstile" provider in the Web3Forms dashboard; Pro plan) -->
+            <div class="cf-turnstile" data-sitekey="0x4AAAAAAFV_Ijz4zfE8Dj9W" data-theme="light"></div>
 
             <div class="form-submit">
               <button class="btn btn-primary" type="submit">Send message</button>

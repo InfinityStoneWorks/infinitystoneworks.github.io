@@ -1190,8 +1190,16 @@ input, textarea, select {
   min-height: 120px;
 }
 
+/* Turnstile sits between the last field and the submit button; matching
+   margins (here and .form-submit below) keep the space above and below equal.
+   Flex removes the inline-iframe baseline gap so only the margins count. */
+.cf-turnstile {
+  display: flex;
+  margin-top: var(--space-4);
+}
+
 .form-submit {
-  margin-top: var(--space-5);
+  margin-top: var(--space-4);
   display: flex;
   align-items: center;
   gap: var(--space-3);

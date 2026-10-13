@@ -10,6 +10,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/css/style.css">
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 </head>
 <body>
 <a class="skip-link" href="#main">Skip to main content</a>
@@ -182,8 +183,8 @@
             <!-- Honeypot: hidden from people, filled in by bots. Web3Forms rejects the submission if it's checked. -->
             <input type="checkbox" name="botcheck" class="honeypot" tabindex="-1" autocomplete="off" aria-hidden="true">
 
-            <!-- reCAPTCHA v2 slot (not active yet): see the setup note in /contact/index.html -->
-            <!-- <div class="g-recaptcha" data-sitekey="YOUR_RECAPTCHA_SITE_KEY"></div> -->
+            <!-- Cloudflare Turnstile (set the secret key + "turnstile" provider in the Web3Forms dashboard; Pro plan) -->
+            <div class="cf-turnstile" data-sitekey="0x4AAAAAAFV_Ijz4zfE8Dj9W" data-theme="light"></div>
 
             <div class="form-submit">
               <button class="btn btn-primary" type="submit">Request a quote</button>

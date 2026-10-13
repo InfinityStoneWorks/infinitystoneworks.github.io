@@ -82,43 +82,9 @@ document.querySelectorAll("form.web3form").forEach((form) => {
   const status = form.querySelector(".form-status");
   const submitLabel = submitBtn.textContent;
 
-  // Optional photo attachments (Contact form only)
-  const MAX_PHOTOS = 5;
-  const MAX_PHOTO_BYTES = 5 * 1024 * 1024;
-  const photoInput = form.elements.attachment;
-  const photoList = form.querySelector(".file-picks");
-
-  const renderPhotos = (files, error) => {
-    if (!photoList) return;
-    photoList.innerHTML = "";
-    if (error) {
-      const li = document.createElement("li");
-      li.dataset.error = "true";
-      li.textContent = error;
-      photoList.appendChild(li);
-      return;
-    }
-    files.forEach((file) => {
-      const li = document.createElement("li");
-      li.textContent = `${file.name} (${(file.size / 1024 / 1024).toFixed(1)} MB)`;
-      photoList.appendChild(li);
-    });
-  };
-
-  if (photoInput) {
-    photoInput.addEventListener("change", () => {
-      const files = Array.from(photoInput.files);
-      let error = "";
-      if (files.length > MAX_PHOTOS) {
-        error = `Choose up to ${MAX_PHOTOS} photos. You picked ${files.length}.`;
-      } else if (files.some((f) => f.size > MAX_PHOTO_BYTES)) {
-        error = "Each photo must be 5 MB or smaller. Remove the larger ones and choose again.";
-      }
-      if (error) photoInput.value = "";
-      renderPhotos(error ? [] : files, error);
-    });
-    form.addEventListener("reset", () => renderPhotos([]));
-  }
+  // Optional photos (Contact form only) are handled by the Web3Forms Advanced File
+  // Uploader: its script uploads them and adds the result to the form's
+  // "attachment" field, which is sent along with the rest of the JSON below.
 
   const showStatus = (state, message) => {
     status.hidden = false;
@@ -136,8 +102,6 @@ document.querySelectorAll("form.web3form").forEach((form) => {
     }
 
     const data = Object.fromEntries(new FormData(form));
-    const photos = photoInput ? Array.from(photoInput.files) : [];
-    delete data.attachment;
     const honeypotTripped = form.elements.botcheck && form.elements.botcheck.checked;
     delete data.botcheck;
 
@@ -153,37 +117,45 @@ document.querySelectorAll("form.web3form").forEach((form) => {
     data.from_name = "Infinity Stone Works website";
     data.form_source = form.dataset.formSource || "Website";
 
-    // RECAPTCHA: once reCAPTCHA v2 is enabled (Web3Forms Pro), also send the
-    // widget's token, e.g. data["g-recaptcha-response"] = grecaptcha.getResponse();
-    // and call grecaptcha.reset() after a successful send.
+    // Cloudflare Turnstile: the widget's token is already in data["cf-turnstile-response"]
+    // (it's a form field). Require it, and reset the widget after each attempt.
+    const hasCaptcha = !!form.querySelector(".cf-turnstile");
+    if (hasCaptcha && !data["cf-turnstile-response"]) {
+      showStatus("error", "Please complete the captcha before sending.");
+      return;
+    }
 
     submitBtn.disabled = true;
     submitBtn.textContent = "Sending...";
 
     try {
-      let request;
-      if (photos.length) {
-        // Attachments require multipart; the browser sets the Content-Type boundary itself.
-        const body = new FormData();
-        Object.entries(data).forEach(([key, value]) => body.append(key, value));
-        photos.forEach((file) => body.append("attachment", file));
-        request = { method: "POST", headers: { Accept: "application/json" }, body };
-      } else {
-        request = {
-          method: "POST",
-          headers: { "Content-Type": "application/json", Accept: "application/json" },
-          body: JSON.stringify(data),
-        };
-      }
+      // Send as FormData rather than JSON: the uploader adds one "attachment" entry
+      // per photo, and JSON via Object.fromEntries would keep only the last one.
+      // The browser sets the multipart Content-Type boundary itself.
+      const body = new FormData();
+      new FormData(form).forEach((value, key) => {
+        if (key === "botcheck" || value instanceof File) return;
+        body.append(key, value);
+      });
+      ["access_key", "subject", "from_name", "form_source"].forEach((key) => body.set(key, data[key]));
+      const request = { method: "POST", headers: { Accept: "application/json" }, body };
       const res = await fetch(WEB3FORMS_ENDPOINT, request);
       const result = await res.json();
       if (!res.ok || !result.success) throw new Error(result.message || "Request failed");
 
       form.reset();
+      // form.reset() doesn't touch the uploader's drop zone; clear it explicitly.
+      if (window.FilePond) {
+        form.querySelectorAll(".filepond--root").forEach((root) => {
+          const pond = window.FilePond.find(root);
+          if (pond) pond.removeFiles();
+        });
+      }
       showStatus("success", `Thanks, ${data.name}. We received your message and will follow up by phone or email.`);
     } catch (err) {
       showStatus("error", "Your message didn't send. Check your connection and try again, or call (253) 267-1561.");
     } finally {
+      if (hasCaptcha && window.turnstile) window.turnstile.reset();
       submitBtn.disabled = false;
       submitBtn.textContent = submitLabel;
     }
