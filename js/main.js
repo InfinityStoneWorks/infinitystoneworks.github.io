@@ -166,13 +166,21 @@ document.querySelectorAll("form.web3form").forEach((form) => {
 // phones. Shrink it to fit so it keeps the same side padding as the other inputs.
 function fitTurnstile() {
   document.querySelectorAll(".cf-turnstile").forEach((el) => {
-    el.style.zoom = 1;
+    el.style.transform = "";
+    el.style.marginBottom = "";
     const available = el.parentElement.clientWidth;
-    el.style.zoom = available < el.offsetWidth ? available / el.offsetWidth : 1;
+    const scale = available < el.offsetWidth ? available / el.offsetWidth : 1;
+    if (scale === 1) return;
+    // Transforms don't change layout, so pull the space below up to match the shrunken height.
+    el.style.transformOrigin = "0 0";
+    el.style.transform = `scale(${scale})`;
+    el.style.marginBottom = `${-el.offsetHeight * (1 - scale)}px`;
   });
 }
 fitTurnstile();
 window.addEventListener("resize", fitTurnstile);
+// The widget's iframe (and so its height) arrives after load; refit once it does.
+window.addEventListener("load", fitTurnstile);
 
 // Open a <details> accordion when a same-page link jumps to it
 function openDetailsTarget(hash) {
