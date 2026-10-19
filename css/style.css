@@ -2969,7 +2969,7 @@ details[open] > .group-body-wrap {
 }
 
 .hero-legal .hero-inner {
-  padding-block: var(--space-6) var(--space-5);
+  padding-block: var(--space-8) var(--space-7);
 }
 
 .hero-legal::after {
@@ -3011,14 +3011,14 @@ details[open] > .group-body-wrap {
 
 .hero-privacy {
   background-image:
-    linear-gradient(to top, color-mix(in srgb, var(--charcoal) 88%, transparent), color-mix(in srgb, var(--charcoal) 60%, transparent)),
+    linear-gradient(to top, color-mix(in srgb, var(--charcoal) 48%, transparent), color-mix(in srgb, var(--charcoal) 20%, transparent)),
     url("/assets/privacy/privacy-bg.jpg");
   background-position: center, center 55%;
 }
 
 .hero-terms {
   background-image:
-    linear-gradient(to top, color-mix(in srgb, var(--charcoal) 90%, transparent), color-mix(in srgb, var(--charcoal) 72%, transparent)),
+    linear-gradient(to top, color-mix(in srgb, var(--charcoal) 70%, transparent), color-mix(in srgb, var(--charcoal) 52%, transparent)),
     url("/assets/terms/tos-bg.jpg");
   background-position: center, center 62%;
 }
