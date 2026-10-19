@@ -1,4 +1,24 @@
 /* ==========================================================================
+   Self-hosted fonts (variable, latin subset) — no requests to Google
+   ========================================================================== */
+
+@font-face {
+  font-family: "Cinzel";
+  font-style: normal;
+  font-weight: 400 900;
+  font-display: swap;
+  src: url("/assets/fonts/cinzel-latin.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Work Sans";
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url("/assets/fonts/work-sans-latin.woff2") format("woff2");
+}
+
+/* ==========================================================================
    Infinity Stone Works — Design Tokens
    ========================================================================== */
 
@@ -2838,4 +2858,167 @@ details[open] > .group-body-wrap {
 .faq-note a {
   color: var(--umber);
   font-weight: 600;
+}
+
+/* ==========================================================================
+   Legal pages (Privacy Policy, Terms of Service) & footer legal links
+   ========================================================================== */
+
+.legal {
+  max-width: 760px;
+  margin-inline: auto;
+}
+
+.legal-updated {
+  color: var(--color-text-soft);
+  font-size: var(--text-sm);
+  margin-bottom: var(--space-5);
+}
+
+.legal-draft {
+  padding: var(--space-3) var(--space-4);
+  margin-bottom: var(--space-5);
+  border-left: 3px solid var(--gold);
+  background: color-mix(in srgb, var(--gold) 14%, var(--bg-light));
+  border-radius: 0 var(--radius-sm, 4px) var(--radius-sm, 4px) 0;
+  font-size: var(--text-sm);
+}
+
+.legal h2 {
+  margin-top: var(--space-6);
+  margin-bottom: var(--space-3);
+  font-size: var(--text-xl);
+}
+
+.legal h3 {
+  margin-top: var(--space-4);
+  margin-bottom: var(--space-2);
+  font-size: var(--text-md);
+}
+
+.legal p,
+.legal li {
+  color: var(--color-text-soft);
+}
+
+.legal p + p,
+.legal p + ul,
+.legal ul + p {
+  margin-top: var(--space-3);
+}
+
+.legal ul {
+  list-style: disc;
+  padding-left: var(--space-4);
+}
+
+.legal li + li {
+  margin-top: var(--space-2);
+}
+
+.legal a {
+  color: var(--umber);
+  font-weight: 600;
+  text-underline-offset: 3px;
+  transition: color var(--duration-fast) var(--ease-standard);
+}
+
+.legal a:hover,
+.legal a:focus-visible {
+  color: var(--charcoal);
+}
+
+.legal a:active {
+  color: var(--gold);
+}
+
+.legal .todo {
+  background: color-mix(in srgb, var(--gold) 30%, transparent);
+  padding: 0 var(--space-1);
+  border-radius: 2px;
+}
+
+.footer-legal {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+}
+
+.footer-legal a {
+  text-decoration: none;
+  color: inherit;
+  transition: color var(--duration-fast) var(--ease-standard);
+}
+
+.footer-legal a:hover,
+.footer-legal a:focus-visible {
+  color: var(--gold);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.footer-legal a:active {
+  color: var(--bg-light);
+}
+
+.hero-legal {
+  background:
+    radial-gradient(ellipse 60% 90% at 12% 0%, color-mix(in srgb, var(--gold) 28%, transparent), transparent 70%),
+    radial-gradient(ellipse 50% 80% at 92% 100%, color-mix(in srgb, var(--sage) 30%, transparent), transparent 70%),
+    linear-gradient(180deg, color-mix(in srgb, var(--charcoal) 88%, black), var(--charcoal));
+}
+
+.hero-legal .hero-inner {
+  padding-block: var(--space-6) var(--space-5);
+}
+
+.hero-legal::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.6;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 0.08 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+.form-consent {
+  font-size: var(--text-xs);
+  color: var(--color-text-soft);
+}
+
+.form-consent a {
+  color: var(--umber);
+  font-weight: 600;
+  text-underline-offset: 3px;
+  transition: color var(--duration-fast) var(--ease-standard);
+}
+
+.form-consent a:hover,
+.form-consent a:focus-visible {
+  color: var(--charcoal);
+}
+
+.form-consent a:active {
+  color: var(--gold);
+}
+
+.hero-privacy,
+.hero-terms {
+  background-color: var(--charcoal);
+  background-size: cover;
+  background-blend-mode: multiply, normal;
+}
+
+.hero-privacy {
+  background-image:
+    linear-gradient(to top, color-mix(in srgb, var(--charcoal) 88%, transparent), color-mix(in srgb, var(--charcoal) 60%, transparent)),
+    url("/assets/privacy/privacy-bg.jpg");
+  background-position: center, center 55%;
+}
+
+.hero-terms {
+  background-image:
+    linear-gradient(to top, color-mix(in srgb, var(--charcoal) 90%, transparent), color-mix(in srgb, var(--charcoal) 72%, transparent)),
+    url("/assets/terms/tos-bg.jpg");
+  background-position: center, center 62%;
 }
