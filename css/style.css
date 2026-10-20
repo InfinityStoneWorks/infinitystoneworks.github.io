@@ -3022,3 +3022,7 @@ details[open] > .group-body-wrap {
     url("/assets/terms/tos-bg.jpg");
   background-position: center, center 62%;
 }
+
+.footer-registration {
+  flex-basis: 100%;
+}
