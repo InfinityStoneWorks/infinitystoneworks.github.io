@@ -364,7 +364,8 @@ if (googleReviewsGrid) {
 
       if (reviews.length === 0) {
         googleReviewsGrid.innerHTML =
-          '<p class="reviews-empty">Google reviews haven’t been connected yet — run <code>npm run fetch-reviews</code> once a Places API key is set up to load them here.</p>';
+          // '<p class="reviews-empty">Google reviews haven’t been connected yet — run <code>npm run fetch-reviews</code> once a Places API key is set up to load them here.</p>';
+          '<p class="reviews-empty">Google reviews haven’t been connected yet — Please click on "See On Google" to see google reviews.</p>';
         return;
       }
 
