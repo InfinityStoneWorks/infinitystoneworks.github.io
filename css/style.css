@@ -1817,24 +1817,20 @@ details[open] > .group-body-wrap {
   color: var(--color-text-soft);
 }
 
-.edge-gallery {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-4);
-}
-
 .edge-card {
-  background: var(--color-surface);
-  border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-sm);
-  padding: var(--space-4);
+  border: 0;
+  padding: 0;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
 }
 
-.edge-card img {
-  display: block;
-  width: 100%;
-  height: auto;
-  border-radius: var(--radius-sm);
+.edge-card:active {
+  transform: translateY(-2px);
+}
+
+.material-card-media--contain img {
+  object-fit: contain;
 }
 
 /* --- Collection CTA band --- */

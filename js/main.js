@@ -278,7 +278,7 @@ function addAnimation() {
   })
 }
 
-// Photo gallery lightbox
+// Photo gallery + edge detail lightbox
 const lightbox = document.querySelector("#lightbox");
 if (lightbox) {
   const lightboxImg = lightbox.querySelector(".lightbox-img");
@@ -302,7 +302,7 @@ if (lightbox) {
     if (lastFocused) lastFocused.focus();
   };
 
-  document.querySelectorAll(".photo-item").forEach((item) => {
+  document.querySelectorAll(".photo-item, .edge-card").forEach((item) => {
     item.addEventListener("click", () => {
       const img = item.querySelector("img");
       openLightbox(img.src, img.alt);
