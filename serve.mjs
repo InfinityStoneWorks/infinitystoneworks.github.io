@@ -37,8 +37,10 @@ const server = http.createServer((req, res) => {
 
   fs.readFile(filePath, (err, data) => {
     if (err) {
-      res.writeHead(404, { "Content-Type": "text/plain" });
-      res.end("404 Not Found: " + requestPath);
+      fs.readFile(path.join(ROOT, "404.html"), (err404, page) => {
+        res.writeHead(404, { "Content-Type": err404 ? "text/plain" : MIME_TYPES[".html"] });
+        res.end(err404 ? "404 Not Found: " + requestPath : page);
+      });
       return;
     }
     const ext = path.extname(filePath).toLowerCase();
