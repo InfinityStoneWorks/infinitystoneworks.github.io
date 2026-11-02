@@ -75,7 +75,7 @@ Reviews are baked into a static JSON file, so visitors never trigger an API call
 ## Third-party services
 
 - **Web3Forms:** contact form submissions
-- **hCaptcha:** spam protection on the contact form
+- **Cloudflare Turnstile:** spam protection on the contact form
 - **Cloudflare Web Analytics:** privacy-friendly analytics
 - **Google Places API:** used only by the manual review-refresh script
 
